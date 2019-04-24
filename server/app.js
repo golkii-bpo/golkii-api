@@ -28,6 +28,13 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
 
+//Cors
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //Routing
 app.use('/api',mainRoute);
 app.use("*",(req,res)=>{

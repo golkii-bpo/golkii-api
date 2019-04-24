@@ -5,5 +5,9 @@ const areaController = require('./areaController');
 module.exports = areaRouter;
 
 areaRouter
-.route('/')
-.post(areaController.agregar);
+.get('/',areaController.getBuscar)
+.get('/:IdArea',areaController.getBuscarById)
+.post('/',areaController.postAgregar)
+.put('/:IdArea',areaController.putModificar)
+.put('/:IdArea/DarBaja',areaController.putDarBaja)
+.put('/:IdArea/DarAlta',areaController.putDarAlta);

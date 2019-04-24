@@ -1,5 +1,12 @@
-const Mongoose = require('mongoose');
+const db = require('mongoose');
 const Chalk = require('chalk');
+
+const Options = { 
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1500
+}
 
 module.exports = {
     /**
@@ -8,19 +15,16 @@ module.exports = {
      * @param {Cadena de Conexion para mongodb} MongoUri
      */
     connect:(MongoUri) => {
-        Mongoose.connect(MongoUri, { 
-            useCreateIndex: true,
-            useNewUrlParser: true }
-        );
+        db.connect(MongoUri,Options);
 
-        Mongoose.connection.on('connected',()=>{
-            console.log('Mongoose connection is '+Chalk.green('connected'));
+        db.connection.on('connected',()=>{
+            console.log('Base de datos: '+Chalk.bgGreen(Chalk.black('Conectada')));
         });
-        Mongoose.connection.on('error', function(err){
-            console.log(`Mongoose default connection has occured ${chalk.red(err)} error`);
+        db.connection.on('disconnected', () =>{
+            console.log('Base de datos: '+Chalk.yellow('Desconectada'));
         });
-        Mongoose.connection.on('disconnected', function(){
-            console.log('Mongoose default connection is '+chalk.yellow('disconnected'));
+        db.connection.on('error', function(err){
+            console.log(`Base de datos: ${Chalk.red(err)} error`);
         });
     }
 }

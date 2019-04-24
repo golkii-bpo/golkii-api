@@ -35,4 +35,10 @@ const AreaSchema = new Schema({
     }
 });
 
+AreaSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) next(new Error('El nombre del Area debe ser único'));
+    if(error) next(error);
+    next();
+});
+
 module.exports = model('Area',AreaSchema);
