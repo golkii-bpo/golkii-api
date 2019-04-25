@@ -11,7 +11,7 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// Gets or sets the edad.
         /// </summary>
         /// <value>The edad.</value>
-        public int edad { get; set; }
+        public int? edad { get; set; }
         /// <summary>
         /// Gets or sets the sexo.
         /// </summary>

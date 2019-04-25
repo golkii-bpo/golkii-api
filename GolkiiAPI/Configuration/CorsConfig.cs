@@ -14,9 +14,11 @@ namespace GolkiiAPI.Configuration
                 builder =>
                 {
                     builder
-                        .WithOrigins("http://*")
-                        .WithHeaders("*")
-                        .WithMethods("*");
+                       // .WithOrigins("http://localhost:3000","http://192.168.1.*")
+                        .AllowAnyOrigin()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .WithMethods("OPTIONS","GET","POST")
+                        .AllowAnyHeader();
                 });
             });
         }

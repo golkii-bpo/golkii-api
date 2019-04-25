@@ -34,7 +34,7 @@ namespace GolkiiAPI.src.BaseControl.Persona
                             idPersona = m.Field<int>("IdPersona"),
                             nombre = m.Field<string>("Nombre"),
                             cedula = m.Field<string>("Cedula"),
-                            edad = m.Field<int>("Edad"),
+                            edad = m.Field<int?>("Edad"),
                             sexo = m.Field<string>("Sexo"),
                             salario = (float)m.Field<Decimal>("Salario"),
                             salarioINSS = (float)m.Field<Decimal>("SalarioInss"),
