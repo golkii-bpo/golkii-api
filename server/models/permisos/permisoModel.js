@@ -51,7 +51,7 @@ const PermisoSchema = new Schema({
 });
 
 PermisoSchema.post('save', function(error, doc, next) {
-    if (error.name === 'MongoError' && error.code === 11000) next(new Error('El titulo del permiso debe ser único'));
+    if (error.name === 'MongoError' && error.code === 11000) next(new Error('El Titulo del permiso ya se encuentra registrado.'));
     if(error) next(error);
     next();
 });

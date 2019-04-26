@@ -6,4 +6,9 @@ const errorHandler = require('../../middleware/errorHandler');
 module.exports = permisosRouter;
 
 permisosRouter
-.post('/',errorHandler(permisoController.postAgregar));
+.get('',errorHandler(permisoController.getBuscar))
+.get('/:idPermiso',errorHandler(permisoController.getBuscarById))
+.post('/',errorHandler(permisoController.postAgregar))
+.put('/',errorHandler(permisoController.putModificar))
+.put('/:idPermiso/darBaja',errorHandler(permisoController.putDarBaja))
+.put('/:idPermiso/darAlta',errorHandler(permisoController.putDarAlta));

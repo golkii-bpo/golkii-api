@@ -12,18 +12,16 @@ module.exports = {
      * @returns Array<permisoModel>
      */
     getBuscar: async (req,res) => {
-        const _r = 
-        await 
-        permisoModel
+        const _r = await permisoModel
         .find({Estado:true})
         .select({
             Descripcion:true,
             Area:true,
             Parent:true,
-            Path:true
+            Path:true,
+            IsTag:true
         });
-
-        res.status(200).json(_r);
+        res.json(_r);
     },
 
     /**
@@ -68,8 +66,6 @@ module.exports = {
     postAgregar: async (req,res) => {
         const{error,value} = await permisoService.validarModelo(req.body);
         if(error) return res.status(400).json(Message.sendError(error));
-
-        console.log(value);
 
         const _permiso = await permisoModel.create(value)
         return res.status(200).json(Message.sendValue(_permiso));
@@ -148,5 +144,20 @@ module.exports = {
         
         let _Permiso = await Permiso.save();
         return res.json(_Permiso);
+    },
+
+    /**
+     * Procedimiento que permite dar de baja a un equipo
+     *
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
+    delEliminar: async (req,res) => {
+        if(!req.params.hasOwnProperties('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+
+        const idPermiso = req.params.idPermiso;
+        const _resultado = await permisoModel.deleteOne({_id:id});
+        return res.json(_resultado);
     }
 }
