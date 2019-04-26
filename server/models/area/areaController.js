@@ -1,6 +1,6 @@
 const areaModel = require('./areaModel');
 const areaService = new (require('./areaService'))();
-const Message = require('../../helpers/message');
+const Mensaje = new (require('../../helpers/message'))();
 
 module.exports = {
 
@@ -13,10 +13,14 @@ module.exports = {
      */
     getBuscar: async(req,res) => {
         try {
-            const _result = await areaModel.find({Estado:true});
-            return res.status(200).json(_result);
+            const _result = 
+            await areaModel
+            .find({Estado:true})
+            .select({FechaModificacion:0});
+
+            return res.status(200).json(Mensaje.sendValue(_result));
         } catch (error) {
-            return res.status(400).json(new Message(error.message,null));
+            return res.status(400).json(Mensaje.sendError(error.message));
         }
     },
 
@@ -28,12 +32,8 @@ module.exports = {
      * @returns Array<AreaModel>
      */
     getBuscarAll: async(req,res) => {
-        try {
             const _result = await areaModel.find();
-            return res.status(200).json(_result);
-        } catch (error) {
-            return res.status(400).json(new Message(error.message,null));
-        }
+            return res.status(200).json(Mensaje.sendValue(_result));
     },
 
     /**
@@ -44,16 +44,10 @@ module.exports = {
      * @returns AreaModel
      */
     getBuscarById: async(req,res) => {
-        try {
-
             const IdArea = req.params.IdArea;
-            if(!areaService.validarObjectId(IdArea)) return res.status(400).json(new Message('El Id ingresado no tiene el formato correcto'))
-            const _result = await areaModel.findOne({_id:IdArea});
-            return res.status(200).json(_result);
-
-        } catch (error) {
-            return res.status(400).json(new Message(error.message,null));
-        }
+            if(!areaService.validarObjectId(IdArea)) return res.status(400).json(Mensaje.sendError('El Id ingresado no tiene el formato correcto'))
+            const _result = await areaModel.findOne({_id:IdArea}).select({FechaModificacion:0});;
+            return res.status(200).json(Mensaje.sendValue(_result));
     },
 
     /**
@@ -64,23 +58,11 @@ module.exports = {
      * @returns AreaModel
      */
     postAgregar: async (req,res) => {
-        
-        try {
             const {error,value} = areaService.validarAgregar(req.body);
-            if(error) return res.status(400).json(new Message(error,null));
+            if(error) return res.status(400).json(Mensaje.sendError(error));
 
-            await areaModel
-            .create(value)
-            .then((result) =>{
-                return res.status(200).json(result);
-            }).catch((error)=>{
-                return res.status(400).json(new Message(error.message,null));
-            });
-
-        } catch (error) {
-            if(error.hasOwnProperty('errmsg')) return res.status(400).json(new Message(error.errmsg,null));
-            return res.status(400).json(new Message(error.message,null));
-        }
+            const _result = await areaModel.create(value);
+            return res.status(200).json(Mensaje.sendValue(Mensaje.sendValue(_result)));
     },
 
     /**
@@ -91,11 +73,9 @@ module.exports = {
      * @returns AreaModel
      */
     putModificar: async (req,res) => {
-        try {
-
             const _id = req.params.IdArea, body = req.body;
             const {error,value} = areaService.validarModificar(_id,body);
-            if(error) return res.status(200).send(new Message(error,value));
+            if(error) return res.status(200).send(Mensaje.sendValue(value));
             
             const _area = await areaModel.findById(_id);
             _area.set({
@@ -104,13 +84,8 @@ module.exports = {
                 FechaModificacion: Date.now()
             });
 
-            const resultado = await Area.save();
-            res.status(200).json(resultado);
-
-        } catch (error) {
-            if(error.hasOwnProperty('errmsg')) return res.status(400).json(new Message(error.errmsg,null));
-            return res.status(400).json(new Message(error.message,null));
-        }
+            const _result = await Area.save();
+            res.status(200).json(Mensaje.sendValue(_result));
     },
 
     /**
@@ -121,21 +96,17 @@ module.exports = {
      * @returns areaModel
      */
     putDarBaja: async (req,res) => {
-        try {
             const _id = req.params.IdArea;
-            if(!areaService.validarObjectId(_id)) return res.status(400).json( new Message('El Id ingresado no tiene el formato correcto'));
+            if(!areaService.validarObjectId(_id)) return res.status(400).json(Mensaje.sendError('El Id ingresado no tiene el formato correcto'));
             
             const _area = areaModel.findById(_id);
-            if(!_area) return res.status(400).json(new Message('No existe el Area, con el codigo especificado.'));
+            if(!_area) return res.status(400).json(Mensaje.sendError('No existe el Area, con el codigo especificado.'));
 
             _area.set({
                 Estado:false
             })
-            const resultado = await _area.save();
-            return res.status(200).json(resultado);
-        } catch (error) {  
-            return res.status(400).json(new Message(error.message));
-        }
+            const _result = await _area.save();
+            return res.status(200).json(Mensaje.sendValue(_result));
     },
 
     /**
@@ -146,20 +117,16 @@ module.exports = {
      * @returns areaModel
      */
     putDarAlta: async (req,res) => {
-        try {
-            const _id = req.params.IdArea;
-            if(!areaService.validarObjectId(_id)) return res.status(400).json( new Message('El Id ingresado no tiene el formato correcto'));
-            
-            const _area = areaModel.findById(_id);
-            if(!_area) return res.status(400).json(new Message('No existe el Area, con el codigo especificado.'));
+        const _id = req.params.IdArea;
+        if(!areaService.validarObjectId(_id)) return res.status(400).json(Mensaje.sendError('El Id ingresado no tiene el formato correcto'));
+        
+        const _area = areaModel.findById(_id);
+        if(!_area) return res.status(400).json(Mensaje.sendError('No existe el Area, con el codigo especificado.'));
 
-            _area.set({
-                Estado:true
-            })
-            const resultado = await _area.save();
-            return res.status(200).json(resultado);
-        } catch (error) {  
-            return res.status(400).json(new Message(error.message));
-        }
+        _area.set({
+            Estado:true
+        })
+        const _result = await _area.save();
+        return res.status(200).json(Mensaje.sendValue(_result));
     }
 }

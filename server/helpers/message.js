@@ -1,12 +1,25 @@
 module.exports = class Message {
+
     /**
      *Crea un instancia Message
      * @param { Retorno de información de donde se encuentra el posible error } error
      * @param { Si no hubo ningun tipo de fallo entonces retorna el resultado esperado } value
      */
-    constructor(error,value){
-        this.error = error,
-        this.value = value
+    constructor(){
+        this.error = null,
+        this.value = null
+    }
+
+    sendError(_error){
+        this.error = _error;
+        this.value = null;
+        return {error: this.error,value: this.value};
+    }
+
+    sendValue(content){
+        this.error = null;
+        this.value = content;
+        return {error: this.error,value: this.value};
     }
 
     /**
@@ -16,24 +29,30 @@ module.exports = class Message {
      * @description {Esto es una prueba}
      * @readonly
      */
-    get Error(){
-        return this.hasError();
-    }
-    hasError(){
-        return this.error? true:false;
+    get getError(){
+        return this.sendError;
     }
 
+    set setError(content){
+        this.value = null;
+        this.error = content;
+    }
     
     /**
      * Retorna los valores de Error y Value dentro de la clase
      *
      * @readonly
      */
-    get Values(){
-        return this.hasResult();
-    }
-    hasResult(){
-        return {error:this.error,value:this.value};
+    get getValue(){
+        return this.sendValue;
     }
 
+    /**
+     * Establece el valor de resultado a la clase de Message
+     *
+     */
+    set setValue(content){
+        this.error = null;
+        this.value = content;
+    }
 } 

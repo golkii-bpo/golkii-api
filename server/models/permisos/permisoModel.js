@@ -3,13 +3,15 @@ const Mongoose = require('mongoose');
 const { model, Schema } = Mongoose;
 
 const PermisoSchema = new Schema({
-    Nombre: {
+    IsTag: {
+        type: Boolean,
+        required: true,
+    },
+    Titulo: {
         type: String,
         required: true,
-        index: true,
-        unique: true,
-        maxlength:30,
-        minlength:5
+        unique:true,
+        maxlength:15
     },
     Descripcion: {
         type:String,
@@ -19,18 +21,19 @@ const PermisoSchema = new Schema({
     Area: {
         type: String,
         required: true,
-        index: true,
         maxlength:30
     },
-    Titulo: {
-        type: String,
-        required: true,
-        maxlength:12
+    Parent: {
+        type:String,
+        required: function() {
+            return !this.IsTag;
+        }
     },
-    Parent: String,
     Path: {
         type: String,
-        required: true
+        required: function() {
+            return !this.IsTag;
+        }
     },
     FechaIngreso: {
         type: Date,
@@ -45,6 +48,12 @@ const PermisoSchema = new Schema({
         default: true,
         required: true
     }
+});
+
+PermisoSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) next(new Error('El titulo del permiso debe ser único'));
+    if(error) next(error);
+    next();
 });
 
 module.exports = model("Permiso",PermisoSchema);

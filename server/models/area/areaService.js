@@ -1,7 +1,7 @@
 const Joi = require('joi-es');
-// const _are = require('./areaModel');
 const general = require('../../helpers/generalValidation');
-const Message = require('../../helpers/message');
+const areaModel = require('./areaModel');
+const Message = new (require('../../helpers/message'))();
 
 const areaValidation = Joi.object().keys({
     Nombre: Joi.string().max(20).required(),
@@ -12,22 +12,21 @@ const areaValidation = Joi.object().keys({
 });
 
 /**
- *Valida el modelo de datos de Area
+ *  Valida el modelo de datos de Area
  *
  * @param {*} body
  * @returns
  */
+const validarModelo = (body) => {
+    const{error,value} = Joi.validate(body,areaValidation);
+    //validación de modelo de datos
+    if(error && error.details) return  Message.sendError(error.details[0].message);
+    
+    //Se valida que sea unico el tipo de datos
+    return {error:null,value};
+};
 
 class areaService extends general {
-    validarModelo(body) {
-        const{error,value} = Joi.validate(body,areaValidation);
-        //validación de modelo de datos
-        if(error && error.details) return new Message(error.details[0].message);
-        
-        //Se valida que sea unico el tipo de datos
-        return {error,value};
-    };
-
     /**
      *Funcion que permite validar el modelo de datos de un Area
      *
@@ -46,9 +45,14 @@ class areaService extends general {
      * @returns { Retorna un objeto con un 2 propiedades un error y un value. Si ocurre algun inconveniente la propiedad [error] envia un mensaje del error que ocurrio }
      */
     validarModificar(id,body) {
-        if(!this.validarObjectId(id)) return new Message('El Id ingresado no tiene el formato correcto',null);
+        if(!this.validarObjectId(id)) return Message.sendError('El Id ingresado no tiene el formato correcto');
         return validarModelo(body);
     };
+
+    async validarArea(area) {
+        const _r = await areaModel.findOne({Nombre:area}).select({_id:1});
+        return _r? true:false;
+    }
 }
 
 module.exports = areaService;
