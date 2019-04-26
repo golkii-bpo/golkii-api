@@ -42,7 +42,8 @@ namespace GolkiiAPI.src.BaseControl.Persona
                             departamento = m.Field<string>("Departamento"),
                             municipio = m.Field<string>("Municipios"),
                             domicilio = m.Field<string>("Domicilio"),
-                            origen = m.Field<string>("Origen")
+                            origen = m.Field<string>("Origen"),
+                            isWorking = m.Field<Boolean>("isWorking")
                         }).FirstOrDefault();
                     }
                 }
@@ -76,7 +77,8 @@ namespace GolkiiAPI.src.BaseControl.Persona
                             departamento = m.Field<string>("Departamento"),
                             municipio = m.Field<string>("Municipios"),
                             domicilio = m.Field<string>("Domicilio"),
-                            origen = m.Field<string>("Origen")
+                            origen = m.Field<string>("Origen"),
+                            isWorking = m.Field<Boolean>("isWorking")
                         }).FirstOrDefault();
                     }
                 }

@@ -52,6 +52,11 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// </summary>
         /// <value>The origen.</value>
         public string origen { get; set; }
+        /// <summary>
+        /// Gets or sets the is working.
+        /// </summary>
+        /// <value>The is working.</value>
+        public Boolean isWorking { get; set; }
     }
 
     public class PersonaCompleta 
