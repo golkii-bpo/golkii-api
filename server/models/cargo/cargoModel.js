@@ -1,7 +1,7 @@
 const Mongoose = require('mongoose');
-const { Model, Schema } = Mongoose;
+const { model, Schema } = Mongoose;
 
-const FuncionesSchema = new Schema({
+const FuncionesSchema = {
     Descripcion: {
         type: String,
         maxlength: 255,
@@ -11,9 +11,9 @@ const FuncionesSchema = new Schema({
         type: Date,
         default: Date.now()
     }
-});
+};
 
-const PermisosSchema = new Schema({
+const PermisoSchema = {
     Path: {
         type: String,
         required: true,
@@ -23,7 +23,7 @@ const PermisosSchema = new Schema({
         type: String,
         maxlength: 255
     }
-});
+};
 
 const CargoSchema = new Schema({
     Nombre: {
@@ -42,11 +42,10 @@ const CargoSchema = new Schema({
         maxlength: 255
     },
     Parent: {
-        type: String,
-        required: true
+        type: String
     },
     Funciones: [FuncionesSchema],
-    Permisos: [PermisosSchema],
+    Permisos: [PermisoSchema],
     FechaIngreso: {
         type: Date,
         default: Date.now()
@@ -67,4 +66,4 @@ const CargoSchema = new Schema({
     }
 });
 
-module.exports =  Model('Cargo',CargoSchema);
+module.exports =  model('Cargo',CargoSchema);
