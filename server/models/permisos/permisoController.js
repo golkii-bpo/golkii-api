@@ -79,7 +79,7 @@ module.exports = {
      * @returns permisoModel
      */
     putModificar: async (req,res) => {
-        if(!req.params.hasOwnProperties('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
         
         const id = req.params.idPermiso;
         if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
@@ -110,7 +110,7 @@ module.exports = {
      * @returns permisoModel
      */
     putDarBaja: async (req,res) => {
-        if(!req.params.hasOwnProperties('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
         
         const id = req.params.idPermiso;
         if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
@@ -132,7 +132,7 @@ module.exports = {
      * @returns permisoModel
      */
     putDarAlta: async (req,res) => {
-        if(!req.params.hasOwnProperties('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
         
         const id = req.params.idPermiso;
         if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
@@ -154,7 +154,7 @@ module.exports = {
      * @returns
      */
     delEliminar: async (req,res) => {
-        if(!req.params.hasOwnProperties('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
 
         const idPermiso = req.params.idPermiso;
         const _resultado = await permisoModel.deleteOne({_id:id});

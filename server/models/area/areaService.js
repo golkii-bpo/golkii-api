@@ -1,4 +1,5 @@
-const Joi = require('joi-es');
+// const Joi = require('joi-es');
+const Joi = require('joi');
 const general = require('../../helpers/generalValidation');
 const areaModel = require('./areaModel');
 const Message = new (require('../../helpers/message'))();
@@ -11,20 +12,15 @@ const areaValidation = Joi.object().keys({
     Estado: Joi.boolean()
 });
 
-/**
- *  Valida el modelo de datos de Area
- *
- * @param {*} body
- * @returns
- */
 const validarModelo = (body) => {
     const{error,value} = Joi.validate(body,areaValidation);
     //validación de modelo de datos
     if(error && error.details) return  Message.sendError(error.details[0].message);
     
     //Se valida que sea unico el tipo de datos
-    return {error:null,value};
+    return Message.sendValue(value);
 };
+
 
 class areaService extends general {
     /**

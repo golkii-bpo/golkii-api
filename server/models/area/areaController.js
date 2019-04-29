@@ -1,9 +1,9 @@
 const areaModel = require('./areaModel');
 const areaService = new (require('./areaService'))();
-const Mensaje = new (require('../../helpers/message'))();
+let Mensaje = new (require('../../helpers/message'))();
 
 module.exports = {
-
+    
     /**
      * Extrae todas aquellas Areas activas.
      *
@@ -11,17 +11,13 @@ module.exports = {
      * @param {*} res
      * @returns Array<AreaModel>
      */
-    getBuscar: async(req,res) => {
-        try {
+    getObtener: async(req,res) => {
             const _result = 
             await areaModel
             .find({Estado:true})
             .select({FechaModificacion:0});
 
             return res.status(200).json(Mensaje.sendValue(_result));
-        } catch (error) {
-            return res.status(400).json(Mensaje.sendError(error.message));
-        }
     },
 
     /**
@@ -31,7 +27,7 @@ module.exports = {
      * @param {*} res
      * @returns Array<AreaModel>
      */
-    getBuscarAll: async(req,res) => {
+    getObtenerAll: async(req,res) => {
             const _result = await areaModel.find();
             return res.status(200).json(Mensaje.sendValue(_result));
     },

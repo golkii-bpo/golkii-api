@@ -1,29 +1,43 @@
 const Mongoose = require('mongoose');
 const { model, Schema } = Mongoose;
 
-const FuncionesSchema = {
+const FuncionesSchema = new Schema({
     Descripcion: {
-        type: String,
-        maxlength: 255,
+        type:String,
+        maxlength:255,
         required: true
     },
-    FechaIngreso: {
+    Estado: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
+    FechaModificacion: {
         type: Date,
+        required: true,
         default: Date.now()
     }
-};
+});
 
-const PermisoSchema = {
+const PermisoSchema = new Schema({
     Path: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     Descripcion: {
         type: String,
         maxlength: 255
+    },
+    Estado: {
+        type:Boolean,
+        required:true,
+        default: true
+    },
+    FechaModificacion: {
+        type:Date,
+        default: Date.now()
     }
-};
+});
 
 const CargoSchema = new Schema({
     Nombre: {

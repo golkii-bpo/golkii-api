@@ -1,9 +1,11 @@
 const express = require('express');
 const cargoController = require('./cargoController');
-// const errorHandler = require('../../helpers/generalValidation');
+const errorHandler = require('../../middleware/errorHandler');
 const cargoRoute = express.Router();
 
 module.exports = cargoRoute;
 
 cargoRoute
-.post('',cargoController.postAgregar)
+.get('',errorHandler(cargoController.getObtener))
+.get('/:idCargo/Permisos',errorHandler(cargoController.getPermisosById))
+.post('',errorHandler(cargoController.postAgregar));
