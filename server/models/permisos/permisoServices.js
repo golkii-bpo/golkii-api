@@ -1,7 +1,7 @@
 const Joi = require('joi-es');
 const general = require('../../helpers/generalValidation');
 const areaService = new (require('../../models/area/areaService'))();
-const Mensaje = new (require('../../helpers/message'))();
+const msgHandler = require('../../helpers/MessageToolHandler');
 
 const _PermisoJoi = Joi.object().keys({
     IsTag: Joi.boolean().required(),
@@ -18,9 +18,9 @@ const _PermisoJoi = Joi.object().keys({
 class permisoService extends general{
     async validarModelo(body) {
         const {error,value} = Joi.validate(body,_PermisoJoi);
-        if(error && error.details) return Mensaje.sendError(error.details[0].message);
-        if(!await areaService.validarArea(value.Area)) return Mensaje.sendError('El Area a ingresar no se encuentra registrada en sistema');
-        return Mensaje.sendValue(value);
+        if(error && error.details) return msgHandler.sendError(error.details[0].message);
+        if(!await areaService.validarArea(value.Area)) return msgHandler.sendError('El Area a ingresar no se encuentra registrada en sistema');
+        return msgHandler.sendValue(value);
     };
 }
 

@@ -1,5 +1,5 @@
 const Mongoose = require('mongoose');
-const {Schema,Model} = Mongoose;
+const {Schema,model} = Mongoose;
 
 //Item de Permisos
 const permisoSchema = new Schema({
@@ -33,18 +33,20 @@ const permisoSchema = new Schema({
     }
 });
 
-//Item de Settings
-const SettingSchema = new Schema({
-    DarkMode:Boolean,
-    Side:Boolean
-});
-
 const PerfilSchema = new Schema({
     Foto:{
-        type:String,
-        match:/(http[s]?:\/\/)?([^\/\s]+\/)(.*)/
+        type:String
     },
-    Settings:SettingSchema
+    Settings: new Schema({
+        DarkMode:{
+            type:Boolean,
+            default:false
+        },
+        SideBar:{
+            type:Boolean,
+            default:false
+        }
+    })
 });
 
 //Item de User
@@ -69,13 +71,13 @@ const ColaboradoresSchema = new Schema({
     Nombre:{
         type:String,
         required:true,
-        minlength:0,
+        minlength:5,
         maxlength:30
     },
     Apellido:{
         type:String,
         required:true,
-        minlength:0,
+        minlength:5,
         maxlength:30
     },
     Cedula:{
@@ -85,14 +87,23 @@ const ColaboradoresSchema = new Schema({
         unique:true,
         match:/\d{3}-{0,1}\d{6}-{0,1}\d{4}[A-z]{1}/
     },
-    FechaNacimiento:{
-        type:Date,
-        required:true
+    Email: {
+        type:String,
+        index: true,
+        unique: true,
+        match:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     Cargo:{
         type: Schema.Types.ObjectId,
         ref:'Cargo'
+    },
+    Permisos: [permisoSchema],
+    User: UserSchema,
+    Perfil: PerfilSchema,
+    Estado : {
+        type: Boolean,
+        default: true
     }
 });
 
-module.exports = Model('Colaborador',ColaboradoresSchema);
+module.exports = model('Colaborador',ColaboradoresSchema);

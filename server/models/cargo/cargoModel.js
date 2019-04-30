@@ -33,9 +33,9 @@ const PermisoSchema = new Schema({
         required:true,
         default: true
     },
-    FechaModificacion: {
+    FechaModificacion:{
         type:Date,
-        default: Date.now()
+        default:Date.now()
     }
 });
 

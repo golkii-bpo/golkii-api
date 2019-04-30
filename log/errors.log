@@ -1,0 +1,39 @@
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"errors":{"Permisos":{"message":"Cast to Array failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"Array","value":3,"path":"Permisos","reason":{"message":"Cast to embedded failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"embedded","value":"3","path":"Permisos","reason":{"message":"Parameter \"obj\" to Document() must be an object, got 3","name":"ObjectParameterError"}}}},"_message":"Cargo validation failed","message":"Cargo validation failed: Permisos: Cast to Array failed for value \"3\" at path \"Permisos\"","name":"ValidationError","level":"error"}
+{"errors":{"Permisos":{"message":"Cast to Array failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"Array","value":3,"path":"Permisos","reason":{"message":"Cast to embedded failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"embedded","value":"3","path":"Permisos","reason":{"message":"Parameter \"obj\" to Document() must be an object, got 3","name":"ObjectParameterError"}}}},"_message":"Cargo validation failed","message":"Cargo validation failed: Permisos: Cast to Array failed for value \"3\" at path \"Permisos\"","name":"ValidationError","level":"error"}
+{"errors":{"Permisos":{"message":"Cast to Array failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"Array","value":3,"path":"Permisos","reason":{"message":"Cast to embedded failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"embedded","value":"3","path":"Permisos","reason":{"message":"Parameter \"obj\" to Document() must be an object, got 3","name":"ObjectParameterError"}}}},"_message":"Cargo validation failed","message":"Cargo validation failed: Permisos: Cast to Array failed for value \"3\" at path \"Permisos\"","name":"ValidationError","level":"error"}
+{"errors":{"Permisos":{"message":"Cast to Array failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"Array","value":3,"path":"Permisos","reason":{"message":"Cast to embedded failed for value \"3\" at path \"Permisos\"","name":"CastError","stringValue":"\"3\"","kind":"embedded","value":"3","path":"Permisos","reason":{"message":"Parameter \"obj\" to Document() must be an object, got 3","name":"ObjectParameterError"}}}},"_message":"Cargo validation failed","message":"Cargo validation failed: Permisos: Cast to Array failed for value \"3\" at path \"Permisos\"","name":"ValidationError","level":"error"}
+{"errors":{"Permisos.0.Path":{"message":"Path `Path` is required.","name":"ValidatorError","properties":{"message":"Path `Path` is required.","type":"required","path":"Path"},"kind":"required","path":"Path"}},"_message":"Cargo validation failed","message":"Cargo validation failed: Permisos.0.Path: Path `Path` is required.","name":"ValidationError","level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"message":"Parameter \"filter\" to findOne() must be an object, got 5cc53ef544ee2f04b86662ef","name":"ObjectParameterError","level":"error"}

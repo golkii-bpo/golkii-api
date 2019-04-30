@@ -2,7 +2,7 @@
 const Joi = require('joi');
 const general = require('../../helpers/generalValidation');
 const areaModel = require('./areaModel');
-const Message = new (require('../../helpers/message'))();
+const msgHandler = require('../../helpers/MessageToolHandler');
 
 const areaValidation = Joi.object().keys({
     Nombre: Joi.string().max(20).required(),
@@ -15,10 +15,10 @@ const areaValidation = Joi.object().keys({
 const validarModelo = (body) => {
     const{error,value} = Joi.validate(body,areaValidation);
     //validación de modelo de datos
-    if(error && error.details) return  Message.sendError(error.details[0].message);
+    if(error && error.details) return  msgHandler.sendError(error.details[0].message);
     
     //Se valida que sea unico el tipo de datos
-    return Message.sendValue(value);
+    return msgHandler.sendValue(value);
 };
 
 
@@ -41,7 +41,7 @@ class areaService extends general {
      * @returns { Retorna un objeto con un 2 propiedades un error y un value. Si ocurre algun inconveniente la propiedad [error] envia un mensaje del error que ocurrio }
      */
     validarModificar(id,body) {
-        if(!this.validarObjectId(id)) return Message.sendError('El Id ingresado no tiene el formato correcto');
+        if(!this.validarObjectId(id)) return msgHandler.sendError('El Id ingresado no tiene el formato correcto');
         return validarModelo(body);
     };
 

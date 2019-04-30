@@ -1,6 +1,6 @@
 const permisoModel = require('./permisoModel');
 const permisoService = new (require('./permisoServices'))();
-const Message = new (require('../../helpers/message'))();
+const msgHandler = require('../../helpers/MessageToolHandler');
 
 module.exports = {
 
@@ -65,10 +65,10 @@ module.exports = {
      */
     postAgregar: async (req,res) => {
         const{error,value} = await permisoService.validarModelo(req.body);
-        if(error) return res.status(400).json(Message.sendError(error));
+        if(error) return res.status(400).json(msgHandler.sendError(error));
 
         const _permiso = await permisoModel.create(value)
-        return res.status(200).json(Message.sendValue(_permiso));
+        return res.status(200).json(msgHandler.sendValue(_permiso));
     },
 
     /**
@@ -79,13 +79,13 @@ module.exports = {
      * @returns permisoModel
      */
     putModificar: async (req,res) => {
-        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(msgHandler.sendError('La propiedad idPermiso no ha sido especificada'));
         
         const id = req.params.idPermiso;
-        if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
+        if(!permisoService.validarObjectId(id)) return res.status(400).json(msgHandler.sendError('El id ingresado no cumple con el formato requerido'));
 
         const {error,value} = permisoService.validarModelo(req.body);
-        if(error) return res.status(400).json(Message.sendValue(value));
+        if(error) return res.status(400).json(msgHandler.sendValue(value));
 
         const Permiso = await permisoModel.findById(id);
         Permiso.set({
@@ -110,10 +110,10 @@ module.exports = {
      * @returns permisoModel
      */
     putDarBaja: async (req,res) => {
-        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(msgHandler.sendError('La propiedad idPermiso no ha sido especificada'));
         
         const id = req.params.idPermiso;
-        if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
+        if(!permisoService.validarObjectId(id)) return res.status(400).json(msgHandler.sendError('El id ingresado no cumple con el formato requerido'));
 
         const Permiso = await permisoModel.findOne({_id:id});
         Permiso.set({
@@ -132,10 +132,10 @@ module.exports = {
      * @returns permisoModel
      */
     putDarAlta: async (req,res) => {
-        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(msgHandler.sendError('La propiedad idPermiso no ha sido especificada'));
         
         const id = req.params.idPermiso;
-        if(!permisoService.validarObjectId(id)) return res.status(400).json(Message.sendError('El id ingresado no cumple con el formato requerido'));
+        if(!permisoService.validarObjectId(id)) return res.status(400).json(msgHandler.sendError('El id ingresado no cumple con el formato requerido'));
 
         const Permiso = await permisoModel.findOne({_id:id});
         Permiso.set({
@@ -154,7 +154,7 @@ module.exports = {
      * @returns
      */
     delEliminar: async (req,res) => {
-        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(Message.sendError('La propiedad'));
+        if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(msgHandler.sendError('La propiedad idPermiso no ha sido especificada'));
 
         const idPermiso = req.params.idPermiso;
         const _resultado = await permisoModel.deleteOne({_id:id});

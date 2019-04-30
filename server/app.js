@@ -15,7 +15,7 @@ const logger = Winston.createLogger({
 //inicializacion de web api
 const mainRoute = require('./routes/main');
 const database = require('./db/conexion');
-const Message = new (require('./helpers/message'))();
+const msgHanlder = require('./helpers/MessageToolHandler');
 const app = express();
 
 //inicialización de la base de datos
@@ -44,8 +44,9 @@ app.use("*",(req,res)=>{
 
 //Errors
 app.use((err,req,res,next)=>{
-    if(err && err.hasOwnProperty('errmsg')) return res.status(400).json(Message.sendError(err.errmsg));
-    if(err) return res.status(500).json(Message.sendError(err.message));
+    logger.log('error',err);
+    if(err && err.hasOwnProperty('errmsg')) return res.status(400).json(msgHanlder.sendError(err.errmsg));
+    if(err) return res.status(500).json(msgHanlder.sendError(err.message));
 })
 
 //inicio del servidor en un puerto
