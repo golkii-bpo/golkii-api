@@ -5,10 +5,10 @@ const AreaSchema = new Schema({
     Nombre:{
         type: String,
         unique:true,
+        required:true,
         index:true,
         maxlength:20,
-        minlength:0,
-        required:true
+        minlength:0
     },
     Descripcion:{
         type:String,

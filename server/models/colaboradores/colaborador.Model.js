@@ -11,7 +11,6 @@ const permisoSchema = new Schema({
         type: String,
         required: true,
         index: true,
-        unique: true,
         maxlength:30,
         minlength:5
     },
@@ -53,16 +52,25 @@ const PerfilSchema = new Schema({
 const UserSchema = new Schema({
     userName:{
         type:String,
-        required:true,
-        unique:true
+        required:()=>{
+            if(this.userName != null || this.password != null) return true;
+            return false
+        }
     },
     password:{
         type:String,
-        required:true
+        required:()=>{
+            if(this.userName != null || this.password != null) return true;
+            return false
+        }
     },
     Olvidada:{
         type:Boolean,
         default:false
+    },
+    fechaModificacion: {
+        type: Date,
+        default: Date.now()
     }
 });
 
@@ -90,20 +98,48 @@ const ColaboradoresSchema = new Schema({
     Email: {
         type:String,
         index: true,
-        unique: true,
         match:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     Cargo:{
         type: Schema.Types.ObjectId,
         ref:'Cargo'
     },
-    Permisos: [permisoSchema],
-    User: UserSchema,
-    Perfil: PerfilSchema,
+    Permisos: {
+        type: [permisoSchema],
+        default:[]
+    },
+    User: {
+        type : UserSchema,
+        default:{
+            userName:null,
+            password:null,
+            Olvidada: false,
+            fechaModificacion: Date.now()
+        }
+    },
+    Perfil: {
+        type: PerfilSchema,
+        default: {
+            Foto:null,
+            Settings:{
+                DarkMode:false,
+                SideBar:false
+            }
+        }
+    },
     Estado : {
         type: Boolean,
         default: true
     }
+});
+
+ColaboradoresSchema.post('save', function(error, doc, next) {
+    console.log(error);
+    if (error.name === 'MongoError' && error.code === 11000){
+        if(RegExp(/Cedula/).test(error.errmsg)) next(new Error('La cedula del colaborador ya se encuentra registradad'));
+    };
+    if(error) next(error);
+    next();
 });
 
 module.exports = model('Colaborador',ColaboradoresSchema);

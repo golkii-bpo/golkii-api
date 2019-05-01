@@ -39,6 +39,11 @@ module.exports = new class Message {
                 this.error = `La propiedad ${IdRequire} no ha sido especificada`;
                 return {error:this.error,value:this.value};
             }
+            doNotExist(campo){
+                this.value = null;
+                this.error = `El el valor del campo ${campo} no se encuentra registrado. Favor ingrese un dato valido.`
+                return {error:this.error,value:this.value};
+            }
             /**
              * Mensaje de error por falta de objetos para ser actualizados
              *

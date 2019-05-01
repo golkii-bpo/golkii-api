@@ -37,3 +37,19 @@
 {"level":"error"}
 {"level":"error"}
 {"message":"Parameter \"filter\" to findOne() must be an object, got 5cc53ef544ee2f04b86662ef","name":"ObjectParameterError","level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: Cedula_1 dup key: { : \"0011812940049C\" }","level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: Permisos.Nombre_1 dup key: { : null }","level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: User.userName_1 dup key: { : null }","level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: User.userName_1 dup key: { : null }","level":"error"}
+{"level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: User.userName_1 dup key: { : null }","level":"error"}
+{"driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: GolkiiDb.colaboradors index: User.userName_1 dup key: { : null }","level":"error"}
+{"level":"error"}
+{"errors":{"Perfil":{"message":"Path `Perfil` is required.","name":"ValidatorError","properties":{"message":"Path `Perfil` is required.","type":"required","path":"Perfil"},"kind":"required","path":"Perfil"}},"_message":"Colaborador validation failed","message":"Colaborador validation failed: Perfil: Path `Perfil` is required.","name":"ValidationError","level":"error"}
+{"errors":{"User.userName":{"message":"Path `User.userName` is required.","name":"ValidatorError","properties":{"message":"Path `User.userName` is required.","type":"required","path":"User.userName","value":null},"kind":"required","path":"User.userName","value":null},"User.password":{"message":"Path `User.password` is required.","name":"ValidatorError","properties":{"message":"Path `User.password` is required.","type":"required","path":"User.password","value":null},"kind":"required","path":"User.password","value":null}},"_message":"Colaborador validation failed","message":"Colaborador validation failed: User.userName: Path `User.userName` is required., User.password: Path `User.password` is required.","name":"ValidationError","level":"error"}
+{"level":"error"}
+{"message":"Cast to ObjectId failed for value \"5cc9998648be52343abd54387\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"5cc9998648be52343abd54387\"","kind":"ObjectId","value":"5cc9998648be52343abd54387","path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"5cc9998648be52343abd54390\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"5cc9998648be52343abd54390\"","kind":"ObjectId","value":"5cc9998648be52343abd54390","path":"_id","level":"error"}

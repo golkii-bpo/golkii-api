@@ -15,12 +15,11 @@ module.exports = {
     },
 
     postAgregar: async (req,res) => {
-        const Body = req.Body;
-        console.log(Body);
-        const {error,value} = colaboradorServices.validarColaborador(Body);
+        const _data = req.body;
+        const {error,value} = await colaboradorServices.validarColaborador(_data);
         if(error) return res.status(400).json(msgHandler.sendError(error));
         
         const _result = await colaboradorModel.create(value);
         return res.json(msgHandler.sendValue(_result));
     }
-};1
+};

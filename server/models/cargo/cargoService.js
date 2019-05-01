@@ -99,6 +99,10 @@ class cargoService extends general {
 
         return msgHandler.sendValue(_Permiso);
     }
+    async validarCargoById(idCargo){
+        const _data = await cargoModel.findById(idCargo);
+        return _data? true:false;
+    }
 }
 
 module.exports = new cargoService;
