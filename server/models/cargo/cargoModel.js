@@ -20,13 +20,10 @@ const FuncionesSchema = new Schema({
 });
 
 const PermisoSchema = new Schema({
-    Path: {
-        type: String,
-        required: true
-    },
-    Descripcion: {
-        type: String,
-        maxlength: 255
+    IdPermiso:{
+        type: Schema.Types.ObjectId,
+        ref:'Permisos',
+        required:true
     },
     Estado: {
         type:Boolean,
@@ -58,8 +55,16 @@ const CargoSchema = new Schema({
     Parent: {
         type: String
     },
-    Funciones: [FuncionesSchema],
-    Permisos: [PermisoSchema],
+    Funciones: {
+        type: [FuncionesSchema],
+        min: 1,
+        required:true,
+        default:[]
+    },
+    Permisos: {
+        type: [PermisoSchema],
+        default: []
+    },
     FechaIngreso: {
         type: Date,
         default: Date.now()

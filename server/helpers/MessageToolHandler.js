@@ -39,9 +39,18 @@ module.exports = new class Message {
                 this.error = `La propiedad ${IdRequire} no ha sido especificada`;
                 return {error:this.error,value:this.value};
             }
+            missingBodyProperty(propiedad){
+                this.value = null;
+                this.error = `No se encontro la propiedad ${propiedad}. Para poder continuar continuar con el flujo es necesario este dato.`;
+            }
             doNotExist(campo){
                 this.value = null;
-                this.error = `El el valor del campo ${campo} no se encuentra registrado. Favor ingrese un dato valido.`
+                this.error = `El valor del campo ${campo} no se encuentra registrado. Favor ingrese un dato valido.`
+                return {error:this.error,value:this.value};
+            }
+            alredyExist(campo){
+                this.value = null;
+                this.error = `El ${campo} ya se encuentra registrado. Favor ingresar otro.`;
                 return {error:this.error,value:this.value};
             }
             /**

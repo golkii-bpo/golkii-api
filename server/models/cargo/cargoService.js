@@ -1,5 +1,7 @@
 const Joi = require('joi');
 // const Joi = require('joi-es');
+//Se instancia la variable de Joi ObjectId
+Joi.objectId = require('joi-objectid')(Joi);
 const general = require('../../helpers/generalValidation');
 const cargoModel = require('./cargoModel');
 const areaService = new (require('../../models/area/areaService'))();
@@ -13,8 +15,7 @@ const JoiFunciones = Joi.object().keys({
 });
 
 const JoiPermisos = Joi.object().keys({
-    Path: Joi.string().required(),
-    Descripcion: Joi.string().max(255),
+    IdPermiso: Joi.objectId(),
     Estado: Joi.bool()
 });
 
@@ -30,10 +31,14 @@ const cargoValidacion = Joi.object().keys({
 const validarPermisos = (Permisos) => {
     let _data = {},
         retorno = true;
+    //Se realiza la validación para ver si es un array
     if(!Array.isArray(Permisos)) return false;
+
     for(let item of Permisos){
-        if(_data.hasOwnProperty(item.Path)) {retorno = false;break;}
-        _data[item.Path] = item;
+        //Si esta alojado en memoria entonces significa que este registro se encuentra duplicado
+        if(_data.hasOwnProperty(item.IdPermiso)) {retorno = false;break;}
+        //Si no esta alojado en memoria entonces significa que no esta repetido y se ingresa en memoria para luego ser validado
+        _data[item.IdPermiso] = item;
     }
     return retorno;
 };
@@ -43,10 +48,12 @@ const validarModelo = async (body) => {
     if(error && error.details) return msgHandler.sendError(error.details[0].message);
     
     //Validacion del area que se le va a ingresar a un cargo
-    if(!await areaService.validarArea(value.Area)) return msgHandler.sendError('El area ingresada no es valida');
+    if(!await areaService.validarArea(value.Area)) return msgHandler.Send().doNotExist('Area');
 
     //Validacion de los permisos
-    if(body.hasOwnProperty('Permisos')) if(!validarPermisos(body.Permisos)) return msgHandler.sendError('No puede existir un Permisos con el mismo Path');  
+    // el primer if() es para validar si existe la propiedad Permisos en el objeto
+    // el segundo if() es para validar si hay IdPermisos repetidos
+    if(body.hasOwnProperty('Permisos')) if(!validarPermisos(body.Permisos)) return msgHandler.sendError('No pueden existir permisos duplicados en un mismo cargo');  
     return msgHandler.sendValue(value);
 }
 
@@ -62,6 +69,7 @@ class cargoService extends general {
     async validarAgregar(body){
         const {error,value} = await validarModelo(body);
         if(error) return msgHandler.sendError(error)
+        if(value.hasOwnProperty('Permisos')) return msgHandler.sendError('No se puede agregar el permiso. Primero se tiene que agregar un Cargo para luego agregarle los permisos');
         return msgHandler.sendValue(value);
     }
     /**
@@ -80,28 +88,52 @@ class cargoService extends general {
 
     validarPermisoMultiples (Permisos) {
         const data = Permisos.map(item => {
-            return lodash.pick(item,['Path','Descripcion','Estado'])
+            return lodash.pick(item,['IdPermiso','Estado'])
         });
 
         const {error,value} = Joi.array().items(JoiPermisos).min(1).validate(data);
         if(error) return msgHandler.sendError(error);
         return msgHandler.sendValue(Permisos);
     }
+    
     async validarPermisoSingle (idCargo,Permiso) {
-        const _Permiso = lodash.pick(Permiso,['Path','Descripcion','Estado']);
-        const {error} = JoiPermisos.validate(_Permiso);
-        if(error) return msgHandler.sendError(error);
 
-        const _idPathValid = Array.from((await cargoModel.findOne({_id:idCargo})).Permisos).find(item => {
-            return item.Path == Permiso.Path;
-        });
-        if(_idPathValid) return msgHandler.sendError('Lo sentimos la ruta o direccion ya a sido ingresado a este cargo');
+        const _Permiso = lodash.pick(Permiso,['IdPermiso','Estado']);
+        let {error} = JoiPermisos.validate(_Permiso);
+        if(error) return msgHandler.sendError(error.details[0].message);
 
-        return msgHandler.sendValue(_Permiso);
+        const _dataCargo = (await cargoModel.findOne({_id:idCargo})).toObject();
+
+        //Se valida que exista el cargo
+        if(!_dataCargo) return msgHandler.Send().doNotExist('Cargo');
+        //Se valida que no existan permisos repetidos
+        if(_dataCargo.hasOwnProperty('Permisos')){
+            let Permisos = Array.from(_dataCargo.Permisos);
+            for (const item of Permisos) {
+                if(item.IdPermiso == _Permiso.IdPermiso){
+                    error = msgHandler.sendError('Lo sentimos la ruta o direccion ya a sido ingresado a este cargo');
+                    break;
+                }
+            }
+        }
+        return !error?msgHandler.sendValue(_Permiso): {error};
     }
+
     async validarCargoById(idCargo){
         const _data = await cargoModel.findById(idCargo);
         return _data? true:false;
+    }
+
+    validarCargos(Cargos){
+        if(!Array.isArray(Cargos)) return false;
+        let _data = Cargos.map(item=>{
+            let cargo = cargoModel.findById(item.IdCargo);
+            return cargo? true:false
+        }).find(item => {
+            return item == false;
+        });
+
+        return !_data? true:false;
     }
 }
 

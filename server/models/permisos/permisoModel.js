@@ -1,17 +1,22 @@
 
 const Mongoose = require('mongoose');
 const { model, Schema } = Mongoose;
+const TreeItemSchema = new Schema({
+    Idx: {
+        type:Number,
+        required:true
+    },
+    Item: {
+        type: String,
+        required: true
+    }
+});
 
 const PermisoSchema = new Schema({
-    IsTag: {
-        type: Boolean,
-        required: true,
-    },
     Titulo: {
         type: String,
         required: true,
-        unique:true,
-        maxlength:15
+        maxlength:20
     },
     Descripcion: {
         type:String,
@@ -23,17 +28,14 @@ const PermisoSchema = new Schema({
         required: true,
         maxlength:30
     },
-    Parent: {
-        type:String,
-        required: function() {
-            return !this.IsTag;
-        }
+    Tree: {
+        type:[TreeItemSchema],
+        required:true,
+        min: 1
     },
     Path: {
         type: String,
-        required: function() {
-            return !this.IsTag;
-        }
+        required: true
     },
     FechaIngreso: {
         type: Date,
@@ -50,10 +52,5 @@ const PermisoSchema = new Schema({
     }
 });
 
-PermisoSchema.post('save', function(error, doc, next) {
-    if (error.name === 'MongoError' && error.code === 11000) next(new Error('El Titulo del permiso ya se encuentra registrado.'));
-    if(error) next(error);
-    next();
-});
 
 module.exports = model("Permiso",PermisoSchema);

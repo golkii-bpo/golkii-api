@@ -53,3 +53,66 @@
 {"level":"error"}
 {"message":"Cast to ObjectId failed for value \"5cc9998648be52343abd54387\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"5cc9998648be52343abd54387\"","kind":"ObjectId","value":"5cc9998648be52343abd54387","path":"_id","level":"error"}
 {"message":"Cast to ObjectId failed for value \"5cc9998648be52343abd54390\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"5cc9998648be52343abd54390\"","kind":"ObjectId","value":"5cc9998648be52343abd54390","path":"_id","level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"ok":0,"errmsg":"Transaction numbers are only allowed on a replica set member or mongos","code":20,"codeName":"IllegalOperation","name":"MongoError","level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"message":"Cast to ObjectId failed for value \"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\" at path \"_id\" for model \"Cargo\"","name":"CastError","stringValue":"\"{ IdCargo: '5ccc66e7c42b2461be3b5b79' }\"","kind":"ObjectId","value":{"IdCargo":"5ccc66e7c42b2461be3b5b79"},"path":"_id","level":"error"}
+{"level":"error"}
+{"level":"error"}

@@ -1,7 +1,13 @@
-const cargoMdl = require('./cargoModel');
-const cargoSrv = require('./cargoService');
-const msgHandler = require('../../helpers/MessageToolHandler');
-const lodash = require('lodash');
+const 
+    db = require('mongoose'),
+    cargoMdl = require('./cargoModel'),
+    cargoSrv = require('./cargoService'),
+    colMdl = require('../colaboradores/colaborador.Model');
+    msgHandler = require('../../helpers/MessageToolHandler'),
+    Fawn = require('fawn');
+
+    Fawn.init(db,'golkii_api');
+    const Task = Fawn.Task();
 
 module.exports = {
     
@@ -107,6 +113,14 @@ module.exports = {
         let _result = await cargoMdl.create(value);
         return res.json(msgHandler.sendValue(_result));
     },
+
+    /**
+     *
+     *
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
     putModificar:  async (req,res) => {
         if(!req.params.hasOwnProperty('idCargo')) return res.status(400).json(msgHandler.Send().missingIdProperty('idPermiso'));
         const 
@@ -129,58 +143,6 @@ module.exports = {
     },
 
     /**
-     * 
-     * (NO UTILIZAR)
-     * Este método no se va ha utiliza esta mala la lógica ya que unicamente actualiza lo que tiene
-     * y no lo que recibe.
-     * 
-     * Método que permite modificar los Permisos que posee un cargo por medio de un id del Cargo
-     * @deprecated
-     * @param {*} req
-     * @param {*} res
-     * @returns cargoModel
-     */
-    putModificarPermisos: async (req,res) => {
-        if(!req.params.hasOwnProperty('idCargo')) return res.status(400).json(msgHandler.Send().missingIdProperty('idCargo'));
-        const 
-            idCargo = req.params.idCargo,
-            _permisos = req.body;
-        
-            if(!cargoSrv.validarObjectId(idCargo)) return res.status(400).json(msgHandler.Send().errorIdObject('idCargo'))
-        const {error} = cargoSrv.validarPermisos(req.body);
-        if(error) return res.status(400).json(msgHandler.sendError(error));
-
-        //variable que se va ha hacer uso de Hash table para dar una mejor eficiencia en el codigo.
-        var _data = {};
-        for (const item of _permisos) {
-            _data[item._id.toString()] = lodash.pick(item,['Path','Descripcion','Estado']);
-        }
-
-        const CargosModel = await cargoMdl.findOne({_id:idCargo});
-
-        var _Permisos = Array.from(CargosModel.toObject().Permisos).map(item => {
-            let _rep = _data[item._id.toString()];
-            if(!_rep) return item;
-
-            //Se asignan las 3 variables
-            item.Path = _rep.Path; 
-            item.Descripcion = _rep.Descripcion; 
-            item.Estado = _rep.Estado;
-
-            //Variable por default
-            item.FechaModificacion = Date.now();
-            console.log(item);
-            return item;
-        });
-
-        CargosModel.set({
-            Permisos: _Permisos
-        })
-        
-        return res.json(await CargosModel.save());
-    },
-
-    /**
      * Agregar un permiso al modelo de datos de Cargo
      * 
      * @param {*} req
@@ -188,6 +150,7 @@ module.exports = {
      * @returns
      */
     putAgregarPermisos:async (req,res) => {
+
         if(!req.params.hasOwnProperty('idCargo')) return res.status(400).json(msgHandler.Send().missingIdProperty('idCargo'));
         const 
             idCargo = req.params.idCargo,
@@ -195,11 +158,21 @@ module.exports = {
         
         if(!cargoSrv.validarObjectId(idCargo)) return res.status(400).json(msgHandler.Send().errorIdObject('idCargo'))
         const {error,value} = await cargoSrv.validarPermisoSingle(idCargo,_permiso);
+
         if(error) return res.status(400).json(msgHandler.sendError(error));
 
-        const _result = await cargoMdl.updateOne({_id:idCargo},{$push:{'Permisos':_permiso}});
-        res.json(msgHandler.sendValue(_result));
+        Task.update(cargoMdl,{_id:idCargo},{$push:{'Permisos':_permiso}});
+        Task.update(colMdl,{Cargo:{IdCargo:idCargo}},{$push:{'Permisos':_permiso}});
+
+        await Task
+        .run({useMongoose: true})
+        .then((data) => {
+            return res.json(msgHandler.sendValue('El Permiso se ha agregado correctamente'));
+        }).catch((err)=>{
+            return res.status(400).json(err.message);
+        });
     },
+
     /**
      * Método que permite eliminar un permiso en especifico de un cargo en especifico
      *
@@ -214,6 +187,19 @@ module.exports = {
             idPermiso = req.params.idPermiso;
         if(!cargoSrv.validarObjectId(idCargo)) return res.status(400).json(msgHandler.Send().missingIdProperty('idCargo'));
         if(!cargoSrv.validarObjectId(idPermiso)) return res.status(400).json(msgHandler.Send().missingIdProperty('idPermiso'));
+        
+        //primero se elimina el permiso del Cargo
+        Task.update(cargoMdl,{_id:idCargo},{$pull:{'Permisos': {'IdPermiso':idPermiso}}});
+        //se eliminan los permisos de los colaboradores
+        Task.update(colMdl,{Cargo:idCargo},{$pull:{'Permisos': {'_id':idPermiso}}});
+
+        await Task
+        .run({useMongoose: true})
+        .then((data) => {
+            return res.json(msgHandler.sendValue('El Permiso se ha agregado correctamente'));
+        }).catch((err)=>{
+            return res.status(400).json(err.message);
+        });
 
         const _result = await cargoMdl.updateOne({_id: idCargo},{$pull:{'Permisos': {'_id':idPermiso}}});
         return res.json(_result);

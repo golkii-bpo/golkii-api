@@ -17,9 +17,10 @@ module.exports = {
         .select({
             Descripcion:true,
             Area:true,
-            Parent:true,
+            Tree:true,
             Path:true,
-            IsTag:true
+            IsTag:true,
+            Titulo:true
         });
         res.json(_r);
     },
@@ -50,7 +51,7 @@ module.exports = {
         .select({
             Descripcion:true,
             Area:true,
-            Parent:true,
+            Tree:true,
             Path:true
         });
         return res.json(_r)
@@ -80,20 +81,20 @@ module.exports = {
      */
     putModificar: async (req,res) => {
         if(!req.params.hasOwnProperty('idPermiso')) return res.status(400).json(msgHandler.sendError('La propiedad idPermiso no ha sido especificada'));
-        
         const id = req.params.idPermiso;
         if(!permisoService.validarObjectId(id)) return res.status(400).json(msgHandler.sendError('El id ingresado no cumple con el formato requerido'));
 
-        const {error,value} = permisoService.validarModelo(req.body);
-        if(error) return res.status(400).json(msgHandler.sendValue(value));
+        const {error,value} = await permisoService.validarModelo(req.body);
+
+        if(error) return res.status(400).json(msgHandler.sendValue(error));
 
         const Permiso = await permisoModel.findById(id);
         Permiso.set({
-            Nombre: value.Nombre,
+            Titulo: value.Titulo,
             Descripcion: value.Descripcion,
             Area: value.Area,
             Titulo: value.Titulo,
-            Parent: value.Parent,
+            Tree: value.Tree,
             Path: value.Path,
             FechaModificacion: Date.now()
         })
