@@ -1,11 +1,9 @@
-﻿
-using System.Threading.Tasks;
-using GolkiiAPI.src.Response;
+﻿using GolkiiAPI.src.Response;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GolkiiAPI.src.BaseControl.Persona
+namespace GolkiiAPI.src.Data.Persona
 {
     [Route("api/persona")]
     [ApiController]
