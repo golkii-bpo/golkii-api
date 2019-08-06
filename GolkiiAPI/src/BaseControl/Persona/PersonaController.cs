@@ -38,7 +38,6 @@ namespace GolkiiAPI.src.BaseControl.Persona
         ///             "edad":         INT,
         ///             "sexo":         STRING,
         ///             "salario":      FLOAT,
-        ///             "salarioINSS":  FLOAT,
         ///             "statusCredex": STRING,
         ///             "departamento": STRING,
         ///             "municipio":    STRING,
@@ -51,12 +50,11 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// </remarks>
         /// <returns>The persona by cedula.</returns>
         /// <param name="cedula">011206901234A</param>
-        /// <param name="campaign">Campaign</param>
         [EnableCors]
-        [HttpGet("cedula/{cedula}/campaign/{campaign}")]
+        [HttpGet("cedula/{cedula}")]
         [ProducesResponseType(typeof(ResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ResponseModel> GetPersonaByCedula(string cedula, string campaign) => StatusHandler(service.GetPersonaByCedula(cedula, campaign));
+        public ActionResult<ResponseModel> GetPersonaByCedula(string cedula) => StatusHandler(service.GetPersonaByCedula(cedula));
 
 
         /// <summary>
@@ -82,12 +80,10 @@ namespace GolkiiAPI.src.BaseControl.Persona
         ///             "edad":         INT,
         ///             "sexo":         STRING,
         ///             "salario":      FLOAT,
-        ///             "salarioINSS":  FLOAT,
         ///             "statusCredex": STRING,
         ///             "departamento": STRING,
         ///             "municipio":    STRING,
         ///             "domicilio":    STRING,
-        ///             "origen":       STRING,
         ///             "idPersona":    INT,
         ///             "nombre":       STRING,
         ///             "cedula":       STRING
@@ -95,12 +91,11 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// </remarks>
         /// <returns>The persona by cedula.</returns>
         /// <param name="telefono">87654321</param>
-        /// <param name="campaign">Campaign</param>
         [EnableCors]
-        [HttpGet("telefono/{telefono}/campaign/{campaign}")]
+        [HttpGet("telefono/{telefono}")]
         [ProducesResponseType(typeof(ResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ResponseModel> GetPersonaByTelefono(string telefono, string campaign) => StatusHandler(service.GetPersonaByTelefono(telefono, campaign));
+        public ActionResult<ResponseModel> GetPersonaByTelefono(string telefono) => StatusHandler(service.GetPersonaByTelefono(telefono));
 
             }
 }

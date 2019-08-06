@@ -29,6 +29,8 @@
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="src\GOLKII\Jobs\" />
     <Folder Include="src\Shared\" />
+    <Folder Include="src\Data\" />
+    <Folder Include="src\Data\Persona\" />
   </ItemGroup>
 
   <ItemGroup>

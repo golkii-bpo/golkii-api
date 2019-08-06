@@ -23,11 +23,6 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// <value>The salario.</value>
         public float salario { get; set; }
         /// <summary>
-        /// Gets or sets the salario inss.
-        /// </summary>
-        /// <value>The salario inss.</value>
-        public float salarioINSS { get; set; }
-        /// <summary>
         /// Gets or sets the status credex.
         /// </summary>
         /// <value>The status credex.</value>
@@ -47,16 +42,6 @@ namespace GolkiiAPI.src.BaseControl.Persona
         /// </summary>
         /// <value>The domicilio.</value>
         public string domicilio { get; set; }
-        /// <summary>
-        /// Gets or sets the origen.
-        /// </summary>
-        /// <value>The origen.</value>
-        public string origen { get; set; }
-        /// <summary>
-        /// Gets or sets the is working.
-        /// </summary>
-        /// <value>The is working.</value>
-        public Boolean isWorking { get; set; }
     }
 
     public class PersonaCompleta 

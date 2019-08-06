@@ -37,13 +37,10 @@ namespace GolkiiAPI.src.BaseControl.Persona
                             edad = m.Field<int?>("Edad"),
                             sexo = m.Field<string>("Sexo"),
                             salario = (float)m.Field<Decimal>("Salario"),
-                            salarioINSS = (float)m.Field<Decimal>("SalarioInss"),
                             statusCredex = m.Field<string>("StatusCredex"),
                             departamento = m.Field<string>("Departamento"),
-                            municipio = m.Field<string>("Municipios"),
-                            domicilio = m.Field<string>("Domicilio"),
-                            origen = m.Field<string>("Origen"),
-                            isWorking = m.Field<Boolean>("isWorking")
+                            municipio = m.Field<string>("Municipio"),
+                            domicilio = m.Field<string>("Domicilio")
                         }).FirstOrDefault();
                     }
                 }
@@ -72,13 +69,10 @@ namespace GolkiiAPI.src.BaseControl.Persona
                             edad = m.Field<int>("Edad"),
                             sexo = m.Field<string>("Sexo"),
                             salario = (float)m.Field<Decimal>("Salario"),
-                            salarioINSS = (float)m.Field<Decimal>("SalarioInss"),
                             statusCredex = m.Field<string>("StatusCredex"),
                             departamento = m.Field<string>("Departamento"),
-                            municipio = m.Field<string>("Municipios"),
-                            domicilio = m.Field<string>("Domicilio"),
-                            origen = m.Field<string>("Origen"),
-                            isWorking = m.Field<Boolean>("isWorking")
+                            municipio = m.Field<string>("Municipio"),
+                            domicilio = m.Field<string>("Domicilio")
                         }).FirstOrDefault();
                     }
                 }
@@ -92,9 +86,9 @@ namespace GolkiiAPI.src.BaseControl.Persona
             using (var con = SqlManager.Connection)
             {
                 con.Open();
-                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetTarjetas", con))
+                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetTarjetasDePersonaID", con))
                 {
-                    cmd.Parameters.AddWithValue("@IDPersona", id);
+                    cmd.Parameters.AddWithValue("@PersonaID", id);
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -104,23 +98,21 @@ namespace GolkiiAPI.src.BaseControl.Persona
                         return dt.AsEnumerable().Select(m =>
                             new TarjetaModel
                             {
-                                idTarjetaCliente = m.Field<int>("IdTarjetaCliente"),
                                 banco = m.Field<string>("Banco")
                             }).ToList();
                     }
                 }
             }
         }
-        internal List<TelefonoModel> GetTelefonosPersona(int id, string campaign)
+        internal List<TelefonoModel> GetTelefonosPersona(int id)
         {
             var SqlManager = new ConexionManager();
             using (var con = SqlManager.Connection)
             {
                 con.Open();
-                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetTelefonos", con))
+                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetTelefonosDePersonaID", con))
                 {
-                    cmd.Parameters.AddWithValue("@IDPersona", id);
-                    cmd.Parameters.AddWithValue("@CampaignID", campaign);
+                    cmd.Parameters.AddWithValue("@PersonaID", id);
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -130,17 +122,8 @@ namespace GolkiiAPI.src.BaseControl.Persona
                         return dt.AsEnumerable().Select(m =>
                             new TelefonoModel
                             {
-                                idTelefono = m.Field<int>("IdTelefono"),
                                 telefono = m.Field<int>("Telefono"),
-                                operadora = m.Field<string>("Operadora"),
-                                calledCount = m.Field<int>("CalledCount"),
-                                dateReprocessed = (m.Field<DateTime?>("DateReprocessed") == null)
-                                                    ? (DateTime?)null
-                                                    : Convert.ToDateTime(m.Field<DateTime?>("DateReprocessed")),
-                                user = m.Field<string>("User"),
-                                tipificacion = new TipificacionModel(
-                                                        m.Field<string>("IdTipificacion"),
-                                                        m.Field<string>("Tipificacion")),
+                                operadora = m.Field<string>("Operadora")
 
                             }).ToList();
                     }

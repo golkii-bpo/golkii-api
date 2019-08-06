@@ -10,9 +10,9 @@ namespace GolkiiAPI.src.BaseControl.Persona
     {
         PersonaFactory Factory = new PersonaFactory();
 
-        private ResponseModel PC(PersonaModel P,string campaign) {
+        private ResponseModel PC(PersonaModel P) {
             var Tr = Factory.GetTarjetasPersona(P.idPersona);
-            var Tl = Factory.GetTelefonosPersona(P.idPersona, campaign);
+            var Tl = Factory.GetTelefonosPersona(P.idPersona);
             var _PC = new PersonaCompleta()
             {
                 DatosGenerales = P,
@@ -28,7 +28,7 @@ namespace GolkiiAPI.src.BaseControl.Persona
             return R;
         }
 
-        internal ResponseModel GetPersonaByCedula(string ced, string campaign)
+        internal ResponseModel GetPersonaByCedula(string ced)
         {
             var P = Factory.GetPersonaByCedula(ced);
             if (P is null)
@@ -43,11 +43,11 @@ namespace GolkiiAPI.src.BaseControl.Persona
             }
             else
             {
-                return PC(P, campaign);
+                return PC(P);
             }
         }
 
-        internal ResponseModel GetPersonaByTelefono(string Telefono, string campaign)
+        internal ResponseModel GetPersonaByTelefono(string Telefono)
         {
             var P = Factory.GetPersonaByTelefono(Telefono);
 
@@ -63,7 +63,7 @@ namespace GolkiiAPI.src.BaseControl.Persona
             }
             else
             {
-                return PC(P, campaign);
+                return PC(P);
             }
         }
     }
