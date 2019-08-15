@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GolkiiAPI.src.Shared;
+using GolkiiAPI.src.Data.Telefonia;
+using GolkiiAPI.src.Data.Bancaria;
 
-namespace GolkiiAPI.src.BaseControl.Persona
+namespace GolkiiAPI.src.Data.Persona
 {
 
     public class PersonaModel : AbstractPersonaModel
@@ -47,7 +48,7 @@ namespace GolkiiAPI.src.BaseControl.Persona
     public class PersonaCompleta 
     {
         public PersonaModel DatosGenerales;
-        public List<GolkiiAPI.src.BaseControl.Tarjeta.TarjetaModel> Tarjetas;
-        public List<GolkiiAPI.src.BaseControl.Telefono.TelefonoModel> Telefonos;
+        public List<BancoModel> Tarjetas;
+        public List<TelefonoModel> Telefonos;
     }
 }

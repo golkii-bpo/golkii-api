@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using GolkiiAPI.src.BaseControl.Tarjeta;
-using GolkiiAPI.src.BaseControl.Telefono;
-using GolkiiAPI.src.BaseControl.Tipificacion;
+using GolkiiAPI.src.Data.Bancaria;
+using GolkiiAPI.src.Data.Telefonia;
 using GolkiiAPI.src.Shared;
 
-namespace GolkiiAPI.src.BaseControl.Persona
+namespace GolkiiAPI.src.Data.Persona
 {
     internal class PersonaFactory
     {
@@ -79,14 +78,13 @@ namespace GolkiiAPI.src.BaseControl.Persona
             }
         }
 
-
-        internal List<TarjetaModel> GetTarjetasPersona(int id)
+        internal List<BancoModel> GetBancosDePersona(int id)
         {
             var SqlManager = new ConexionManager();
             using (var con = SqlManager.Connection)
             {
                 con.Open();
-                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetTarjetasDePersonaID", con))
+                using (SqlCommand cmd = SqlManager.Get("GOLKII_APP.SP_GetBancosDePersonaID", con))
                 {
                     cmd.Parameters.AddWithValue("@PersonaID", id);
 
@@ -96,15 +94,17 @@ namespace GolkiiAPI.src.BaseControl.Persona
                         da.Fill(dt);
 
                         return dt.AsEnumerable().Select(m =>
-                            new TarjetaModel
+                            new BancoModel
                             {
-                                banco = m.Field<string>("Banco")
-                            }).ToList();
+                                ID = m.Field<int>("idBanco"),
+                                Banco = m.Field<string>("Banco")
+                            }
+                        ).ToList();
                     }
                 }
             }
         }
-        internal List<TelefonoModel> GetTelefonosPersona(int id)
+        internal List<TelefonoModel> GetTelefonosDePersona(int id)
         {
             var SqlManager = new ConexionManager();
             using (var con = SqlManager.Connection)
@@ -119,13 +119,14 @@ namespace GolkiiAPI.src.BaseControl.Persona
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        return dt.AsEnumerable().Select(m =>
-                            new TelefonoModel
-                            {
-                                telefono = m.Field<int>("Telefono"),
-                                operadora = m.Field<string>("Operadora")
-
-                            }).ToList();
+                        return dt.AsEnumerable()
+                            .Select(m =>
+                                new TelefonoModel
+                                {
+                                    Numero = m.Field<int>("Telefono"),
+                                    Operadora =  new OperadoraModel( m.Field<string>("Operadora"))
+                                }
+                            ).ToList();
                     }
                 }
             }

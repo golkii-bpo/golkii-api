@@ -1,22 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-using GolkiiAPI.src.Response;
-using Microsoft.AspNetCore.Mvc;
+﻿using GolkiiAPI.src.Response;
 using Microsoft.AspNetCore.Http;
 
-namespace GolkiiAPI.src.BaseControl.Persona
+namespace GolkiiAPI.src.Data.Persona
 {
     internal class PersonaService
     {
         PersonaFactory Factory = new PersonaFactory();
 
         private ResponseModel PC(PersonaModel P) {
-            var Tr = Factory.GetTarjetasPersona(P.idPersona);
-            var Tl = Factory.GetTelefonosPersona(P.idPersona);
+            var Bc = Factory.GetBancosDePersona(P.idPersona);
+            var Tl = Factory.GetTelefonosDePersona(P.idPersona);
             var _PC = new PersonaCompleta()
             {
                 DatosGenerales = P,
-                Tarjetas = Tr,
+                Tarjetas = Bc,
                 Telefonos = Tl
             };
             ResponseModel R = new ResponseModel()

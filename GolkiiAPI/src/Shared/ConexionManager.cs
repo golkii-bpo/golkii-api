@@ -16,7 +16,7 @@ namespace GolkiiAPI.src.Shared
         private string GetConnexionString()
         {
             string ConString = $"Server={_Server},{_Port}; Initial Catalog={_Database}; User Id={_User}; Password={_Password};";
-            Console.WriteLine(ConString);
+            Console.WriteLine("NEW CONECTION");
             return ConString;
         }
 
