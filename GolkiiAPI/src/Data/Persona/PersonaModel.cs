@@ -48,7 +48,7 @@ namespace GolkiiAPI.src.Data.Persona
     public class PersonaCompleta 
     {
         public PersonaModel DatosGenerales;
-        public List<BancoModel> Tarjetas;
+        public List<BancoModel> Bancos;
         public List<TelefonoModel> Telefonos;
     }
 }

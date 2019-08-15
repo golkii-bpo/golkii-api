@@ -24,6 +24,7 @@
     <Folder Include="src\Data\Persona\" />
     <Folder Include="src\Data\Bancaria\" />
     <Folder Include="src\Data\Telefonia\" />
+    <Folder Include="src\Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,5 +42,7 @@
     <Compile Remove="src\GOLKII\Reloj\TimeZoneModel.cs" />
     <Compile Remove="src\GOLKII\Reloj\ZonePerJob.cs" />
     <Compile Remove="src\GOLKII\Jobs\JobModel.cs" />
+    <Compile Remove="src\BaseControl\Tarjeta\TarjetaModel.cs" />
+    <Compile Remove="src\GOLKII\Workers\WorkerModel.cs" />
   </ItemGroup>
 </Project>
