@@ -23,15 +23,13 @@ namespace GolkiiAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             CorsConfig.AddCorsPolicy(services);
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v3", new Info { Title = "My API", Version = "v3" });
 
 
                 // Set the comments path for the Swagger JSON and UI.
@@ -54,7 +52,7 @@ namespace GolkiiAPI
                 app.UseHsts();
             }
 
-            CorsConfig.UseCors(app);
+            //CorsConfig.UseCors(app);
 
             _ = new src.Shared.ConexionManager();
 

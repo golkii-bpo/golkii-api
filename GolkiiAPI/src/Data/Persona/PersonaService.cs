@@ -13,7 +13,7 @@ namespace GolkiiAPI.src.Data.Persona
             var _PC = new PersonaCompleta()
             {
                 DatosGenerales = P,
-                Tarjetas = Bc,
+                Bancos = Bc,
                 Telefonos = Tl
             };
             ResponseModel R = new ResponseModel()

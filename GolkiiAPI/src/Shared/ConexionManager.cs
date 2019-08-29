@@ -16,7 +16,7 @@ namespace GolkiiAPI.src.Shared
         private string GetConnexionString()
         {
             string ConString = $"Server={_Server},{_Port}; Initial Catalog={_Database}; User Id={_User}; Password={_Password};";
-            Console.WriteLine("NEW CONECTION");
+            //Console.WriteLine("NEW CONECTION: "+ConString);
             return ConString;
         }
 
@@ -24,6 +24,7 @@ namespace GolkiiAPI.src.Shared
 
         public SqlCommand Get(String ProcedureName, SqlConnection con)
         {
+            Console.WriteLine("EXEC: '"+ProcedureName+"' ");
             SqlCommand cmd = new SqlCommand
             {
                 CommandText = ProcedureName,

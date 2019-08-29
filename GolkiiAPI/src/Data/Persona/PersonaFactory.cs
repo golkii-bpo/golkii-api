@@ -11,10 +11,6 @@ namespace GolkiiAPI.src.Data.Persona
 {
     internal class PersonaFactory
     {
-        public PersonaFactory()
-        {
-        }
-
         internal PersonaModel GetPersonaByCedula(string ced)
         {
             var SqlManager = new ConexionManager();

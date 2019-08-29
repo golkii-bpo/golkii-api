@@ -7,11 +7,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DocumentationFile>bin\Release\netcoreapp2.1\GolkiiAPI.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType></DebugType>
     <Optimize>true</Optimize>
     <DocumentationFile>bin\Debug\netcoreapp2.1\GolkiiAPI.xml</DocumentationFile>
-    <NoWarn>1701;1702,1591</NoWarn>
+    <NoWarn>1701;1702,1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
@@ -44,5 +47,8 @@
     <Compile Remove="src\GOLKII\Jobs\JobModel.cs" />
     <Compile Remove="src\BaseControl\Tarjeta\TarjetaModel.cs" />
     <Compile Remove="src\GOLKII\Workers\WorkerModel.cs" />
+    <Compile Remove="src\Views\EndToEnd.cs" />
+    <Compile Remove="src\Views\DiableLeadsMenu.cs" />
+    <Compile Remove="src\Views\TableViewModel.cs" />
   </ItemGroup>
 </Project>
