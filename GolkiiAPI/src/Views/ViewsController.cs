@@ -15,10 +15,28 @@ namespace GolkiiAPI.src.Views
         private ActionResult<ResponseModel> StatusHandler(ResponseModel R) => R.StatusCode == StatusCodes.Status404NotFound ? NotFound(R) : new ActionResult<ResponseModel>(R);
 
         [EnableCors]
-        [HttpGet("EndToEnd/CalledCount")]
+        [HttpGet("EndToEnd/CalledCount/{From}/{To}")]
         [ProducesResponseType(typeof(ResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ResponseModel> Get_EndToEnd_CC() => StatusHandler(service.Get_EndToEndView_CC());
+        public ActionResult<ResponseModel> Get_EndToEnd_CC(string From, string To)
+        {
+            try
+            {
+                DateTime startDate = DateTime.Parse(From);
+                DateTime endDate = DateTime.Parse(To);
+                return StatusHandler(service.Get_EndToEndView_CC(startDate, endDate));
+            }
+            catch
+            {
+                return StatusHandler(new ResponseModel()
+                {
+                    Message = "Error en formato de fechas",
+                    StatusCode = 404,
+                    Value = null
+                });
+            }
+
+        }
 
         [EnableCors]
         [HttpGet("EndToEnd/CalledTime/{From}/{To}")]

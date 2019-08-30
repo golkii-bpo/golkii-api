@@ -124,7 +124,7 @@ namespace GolkiiAPI.src.Views
             return dtCloned;
         }
 
-        public ResponseModel Get_EndToEndView_CC() => GenData(Totalizer(factory.Get_EndToEnd_CC()));
+        public ResponseModel Get_EndToEndView_CC(DateTime startDate, DateTime endDate) => GenData(Totalizer(factory.Get_EndToEnd_CC(startDate, endDate)));
 
         public ResponseModel Get_EndToEndView_TIME(DateTime startDate, DateTime endDate) => GenData(changeDTType(Totalizer(factory.Get_EndToEnd_TIME(startDate,endDate))));
 

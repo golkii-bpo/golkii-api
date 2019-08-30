@@ -41,7 +41,7 @@ namespace GolkiiAPI.src.Views
             }
         }
 
-        internal DataTable Get_EndToEnd_TIME(DateTime startDate, DateTime endDate) {
+        internal DataTable Get_EndToEnd_View(string procNAME,DateTime startDate, DateTime endDate) {
 
             try
             {
@@ -49,7 +49,7 @@ namespace GolkiiAPI.src.Views
                 using (var con = SqlManager.Connection)
                 {
                     con.Open();
-                    using (var cmd = SqlManager.Get("REPORTS.GET_EndToEnd_TIME", con))
+                    using (var cmd = SqlManager.Get(procNAME, con))
                     {
                         cmd.Parameters.AddWithValue("@FROM ",startDate.ToString("yyyy/MM/dd"));
                         cmd.Parameters.AddWithValue("@TO ", endDate.ToString("yyyy/MM/dd"));
@@ -79,7 +79,8 @@ namespace GolkiiAPI.src.Views
                 return null;
             }
         }
-        internal DataTable Get_EndToEnd_CC() => Get_VIEW("REPORTS.GET_EndToEnd_CC");
+        internal DataTable Get_EndToEnd_TIME(DateTime startDate, DateTime endDate) => Get_EndToEnd_View("REPORTS.GET_EndToEnd_TIME", startDate, endDate);
+        internal DataTable Get_EndToEnd_CC(DateTime startDate, DateTime endDate) => Get_EndToEnd_View("REPORTS.GET_EndToEnd_CC", startDate, endDate);
         internal DataTable Get_DiableLeadsMenu() => Get_VIEW("REPORTS.GET_DiableLeadsMenu");
 
     }
